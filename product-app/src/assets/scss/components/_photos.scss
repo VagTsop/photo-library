@@ -9,16 +9,20 @@
 
   div {
     position: relative;
-    width: 100%;
-    padding-top: 100%; // Ensures the grid items are square
+    width: 94%;
+    padding-top: 65%;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
 
     img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 94%;
       object-fit: cover;
       border-radius: 8px;
       transition: transform 0.3s ease-in-out;

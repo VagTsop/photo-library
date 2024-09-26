@@ -19,7 +19,6 @@ export class PhotosComponent implements OnInit {
   // Simulate an API call to load photos with a random delay
   loadPhotos() {
     if (this.loading) return; // Prevent multiple triggers while loading
-    console.log(this.loading)
     this.loading = true; // Show loader while loading photos
 
     // Simulate a delay between 200-300ms
@@ -42,14 +41,21 @@ export class PhotosComponent implements OnInit {
   // Infinite scroll logic: trigger loadPhotos when scrolling near bottom
   @HostListener('window:scroll', ['$event'])
   onScroll(event: any) {
-    const pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
-    const max = document.documentElement.scrollHeight;
+    // Calculate the scroll position
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const viewportHeight = window.innerHeight;
+    const totalHeight = document.documentElement.scrollHeight;
 
-    if (pos >= max - 50 && !this.loading) { // Adjusted to ensure we load a bit before reaching the bottom
-      // Load more photos if user scrolls to bottom and we are not currently loading
-      this.loadPhotos();
+    // Calculate the percentage of the page that has been scrolled
+    const scrollPercentage = (scrollTop + viewportHeight) / totalHeight;
+
+    // If 90% of the page has been scrolled and loading is not already happening
+    if (scrollPercentage > 0.9 && !this.loading) {
+      console.log(`Scrolled to ${Math.round(scrollPercentage * 100)}%`);
+      this.loadPhotos(); // Trigger the loading of more photos
     }
   }
+
 
   // Logic to add a photo to favorites (you can implement this as needed)
   addToFavorites(photo: any) {
