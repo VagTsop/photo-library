@@ -14,11 +14,13 @@ export class FavoritesComponent implements OnInit {
     this.loadFavorites(); // Load favorites when the component initializes
   }
 
-  // Load favorites from local storage
   loadFavorites() {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
-      this.favorites = JSON.parse(storedFavorites);
+      this.favorites = JSON.parse(storedFavorites).map((photo: any) => ({
+        ...photo,
+        url: `https://picsum.photos/id/${photo.id}/200/300` // Ensure you load the same photo using its ID
+      }));
     }
   }
 
@@ -32,6 +34,4 @@ export class FavoritesComponent implements OnInit {
   viewPhoto(photo: any) {
     this.router.navigate(['/photos', photo.id]);
   }
-
-  
 }

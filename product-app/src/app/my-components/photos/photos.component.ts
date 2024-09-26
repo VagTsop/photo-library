@@ -16,7 +16,6 @@ export class PhotosComponent implements OnInit {
     this.loadPhotos();
   }
 
-  // Simulate an API call to load photos with a random delay
   loadPhotos() {
     if (this.loading) return; // Prevent multiple triggers while loading
 
@@ -31,9 +30,11 @@ export class PhotosComponent implements OnInit {
     const loadTime = Math.max(randomDelay, minSpinnerTime);
 
     setTimeout(() => {
-      // Fetch 6 new random photos from Picsum
-      const newPhotos = Array(6).fill(0).map(() => ({
-        url: `https://picsum.photos/200/300?random=${Math.random()}`
+      // Fetch 6 new random photos from Picsum using static IDs
+      const newPhotos = Array(6).fill(0).map((_, index) => ({
+        id: this.currentPage * 6 + index, // Unique static ID for each photo
+        url: `https://picsum.photos/id/${this.currentPage * 6 + index}/200/300`, // Use the static ID for the photo URL
+        author: `Author ${this.currentPage * 6 + index}` // Example author data
       }));
 
       this.photos = this.photos.concat(newPhotos); // Append new photos to the list
@@ -72,8 +73,8 @@ export class PhotosComponent implements OnInit {
     // Get the existing favorites array from local storage
     let favorites = this.getFavorites(); // This retrieves the current favorites list
 
-    // Check if the photo is already in the favorites list (by its unique ID or URL)
-    const isAlreadyFavorite = favorites.some((fav) => fav.url === photo.url);
+    // Check if the photo is already in the favorites list (by its unique ID)
+    const isAlreadyFavorite = favorites.some((fav) => fav.id === photo.id);
 
     if (!isAlreadyFavorite) {
       // Add the photo to the favorites array
