@@ -1,0 +1,6 @@
+<div class="favorite-grid">
+  <div *ngFor="let favorite of favorites">
+    <img [src]="favorite.download_url" [alt]="favorite.author">
+    <button (click)="removeFromFavorites(favorite)">Remove from Favorites</button>
+  </div>
+</div>
