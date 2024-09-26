@@ -1,5 +1,5 @@
 <!-- Photo Grid with Infinite Scroll -->
-<div class="photo-grid" (window:scroll)="onScroll($event)">
+<div class="photo-grid" (scroll)="onScroll($event)">
   <div *ngFor="let photo of photos" (click)="addToFavorites(photo)">
     <img [src]="photo.url" alt="Random Photo">
   </div>
