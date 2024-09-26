@@ -26,7 +26,17 @@ export class PhotoDetailComponent implements OnInit {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
       const favorites = JSON.parse(storedFavorites);
-      this.photo = favorites.find((fav: any) => fav.id === photoId) || {}; // Default to empty object if not found
+
+      // Convert photoId to number before comparison if needed
+      const numericPhotoId = Number(photoId);
+
+      // Find the photo by id in favorites (ensure correct type comparison)
+      this.photo = favorites.find((fav: any) => fav.id == numericPhotoId) || {}; // Default to empty object if not found
+
+      // Remove the redirect, let the component render even if the photo is missing
+      if (!this.photo || !this.photo.url) {
+        console.warn('Photo not found');
+      }
     }
   }
 
