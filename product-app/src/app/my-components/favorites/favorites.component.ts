@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
@@ -7,17 +8,30 @@ import { Component, OnInit } from '@angular/core';
 export class FavoritesComponent implements OnInit {
   favorites: any[] = [];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.loadFavorites();
+    this.loadFavorites(); // Load favorites when the component initializes
   }
 
+  // Load favorites from local storage
   loadFavorites() {
-    // Load favorites from local storage or a service
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      this.favorites = JSON.parse(storedFavorites);
+    }
   }
 
+  // Remove a photo from favorites
   removeFromFavorites(photo: any) {
-    // Logic to remove the photo from favorites
+    this.favorites = this.favorites.filter(fav => fav.id !== photo.id);
+    localStorage.setItem('favorites', JSON.stringify(this.favorites)); // Update local storage
   }
+
+  // Navigate to single photo page
+  viewPhoto(photo: any) {
+    this.router.navigate(['/photos', photo.id]);
+  }
+
+  
 }

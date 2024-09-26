@@ -68,9 +68,32 @@ export class PhotosComponent implements OnInit {
   }
 
 
-  // Logic to add a photo to favorites (you can implement this as needed)
   addToFavorites(photo: any) {
-    // Add to favorites functionality here
-    console.log('Added to favorites:', photo);
+    // Get the existing favorites array from local storage
+    let favorites = this.getFavorites(); // This retrieves the current favorites list
+
+    // Check if the photo is already in the favorites list (by its unique ID or URL)
+    const isAlreadyFavorite = favorites.some((fav) => fav.url === photo.url);
+
+    if (!isAlreadyFavorite) {
+      // Add the photo to the favorites array
+      favorites.push(photo);
+
+      // Save the updated array back to local storage
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+
+      console.log('Added to favorites:', photo);
+    } else {
+      console.log('Photo is already in favorites.');
+    }
   }
+
+  // Helper function to get favorites from local storage
+  getFavorites(): any[] {
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  }
+
+
+
 }
