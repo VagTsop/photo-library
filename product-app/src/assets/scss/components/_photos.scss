@@ -72,3 +72,16 @@
   }
 }
 
+/* Gallery Image Styling */
+.photo-grid img, .favorite-grid img {
+  border: 8px solid #8e8585; /* Solid border with a purple tone */
+  border-radius: 10px; /* Rounded corners for a smooth look */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover transition */
+}
+
+/* Hover effect to enlarge the image and emphasize the shadow */
+.photo-grid img:hover, .favorite-grid img:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
