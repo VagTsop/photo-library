@@ -1,52 +1,57 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
 })
 export class PhotosComponent implements OnInit {
-  photos: any[] = [];
-  loading = false;
-  currentPage = 1;
+  photos: any[] = []; // Store photos here
+  loading = false; // Show loader when fetching data
+  currentPage = 1; // Simulate pagination
+  totalPhotos = 100; // Arbitrary number, adjust as needed
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   ngOnInit() {
     this.loadPhotos();
   }
 
+  // Simulate an API call to load photos with a random delay
   loadPhotos() {
-    this.loading = true;
+    this.loading = true; // Show loader while loading photos
+
+    // Simulate a delay between 200-300ms
+    const randomDelay = Math.random() * 100 + 200;
+
     setTimeout(() => {
-      this.http.get<any[]>(`https://picsum.photos/v2/list?page=${this.currentPage}&limit=6`).subscribe(
-        data => {
-          this.photos = this.photos.concat(data);
-          this.loading = false;
-          this.currentPage++;
-        },
-        error => {
-          this.loading = false;
-        }
-      );
-    }, Math.random() * 100 + 200);
+      // Fetch 6 new random photos from Picsum
+      const newPhotos = Array(6).fill(0).map(() => ({
+        url: `https://picsum.photos/200/300?random=${Math.random()}`
+      }));
+
+      this.photos = this.photos.concat(newPhotos); // Append new photos to the list
+      this.loading = false; // Hide loader after photos are loaded
+
+      // Emulate pagination, increase currentPage for next load
+      this.currentPage++;
+    }, randomDelay);
   }
 
-  @HostListener('scroll', ['$event'])
+  // Infinite scroll logic: trigger loadPhotos when scrolling near bottom
+  @HostListener('window:scroll', ['$event'])
   onScroll(event: any) {
-    const element = event.target;
+    const pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
+    const max = document.documentElement.scrollHeight;
 
-    const scrollTop = element.scrollTop;
-    const scrollHeight = element.scrollHeight;
-    const offsetHeight = element.offsetHeight;
-
-    // Check if the user is at the bottom of the container
-    if (scrollTop + offsetHeight >= scrollHeight - 1 && !this.loading) {
+    if (pos >= max && !this.loading) {
+      // Load more photos if user scrolls to bottom and we are not currently loading
       this.loadPhotos();
     }
   }
 
+  // Logic to add a photo to favorites (you can implement this as needed)
   addToFavorites(photo: any) {
-    // Logic to add the photo to favorites
+    // Add to favorites functionality here
+    console.log('Added to favorites:', photo);
   }
 }

@@ -1,8 +1,10 @@
+<!-- Photo Grid with Infinite Scroll -->
 <div class="photo-grid" (window:scroll)="onScroll($event)">
   <div *ngFor="let photo of photos" (click)="addToFavorites(photo)">
-    <img [src]="photo.download_url" [alt]="photo.author">
+    <img [src]="photo.url" alt="Random Photo">
   </div>
 
+  <!-- Loader Icon -->
   <div *ngIf="loading" class="loading-spinner">
     <mat-spinner></mat-spinner>
   </div>

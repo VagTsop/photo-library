@@ -12,8 +12,10 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 const MATERIAL_MODULES = [
+  MatProgressSpinnerModule,
   MatIconModule,
   MatButtonModule,
   MatMenuModule,

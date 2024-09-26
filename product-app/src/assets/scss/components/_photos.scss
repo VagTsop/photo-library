@@ -1,6 +1,6 @@
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); // 3 photos per row
   gap: 20px;
   padding: 20px;
   justify-items: center;
@@ -10,7 +10,7 @@
   div {
     position: relative;
     width: 100%;
-    padding-top: 100%;
+    padding-top: 100%; // Ensures the grid items are square
     cursor: pointer;
 
     img {
@@ -24,13 +24,14 @@
       transition: transform 0.3s ease-in-out;
 
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.05); // Scale effect on hover
       }
     }
   }
 }
 
 .loading-spinner {
+  grid-column: 1 / -1; // Center the spinner in the grid
   display: flex;
   justify-content: center;
   margin-top: 20px;
