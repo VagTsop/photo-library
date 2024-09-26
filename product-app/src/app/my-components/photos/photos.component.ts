@@ -19,10 +19,16 @@ export class PhotosComponent implements OnInit {
   // Simulate an API call to load photos with a random delay
   loadPhotos() {
     if (this.loading) return; // Prevent multiple triggers while loading
+
     this.loading = true; // Show loader while loading photos
 
-    // Simulate a delay between 200-300ms
+    // Simulate a delay between 200-300ms for fetching photos
     const randomDelay = Math.random() * 100 + 200;
+
+    // Define a minimum spinner display time (500ms)
+    const minSpinnerTime = 300;
+
+    const loadTime = Math.max(randomDelay, minSpinnerTime);
 
     setTimeout(() => {
       // Fetch 6 new random photos from Picsum
@@ -31,12 +37,17 @@ export class PhotosComponent implements OnInit {
       }));
 
       this.photos = this.photos.concat(newPhotos); // Append new photos to the list
-      this.loading = false; // Hide loader after photos are loaded
+
+      // After photos are loaded, keep the spinner visible for the minimum time
+      setTimeout(() => {
+        this.loading = false; // Hide loader after the minimum time is up
+      }, minSpinnerTime);
 
       // Emulate pagination, increase currentPage for next load
       this.currentPage++;
     }, randomDelay);
   }
+
 
   // Infinite scroll logic: trigger loadPhotos when scrolling near bottom
   @HostListener('window:scroll', ['$event'])

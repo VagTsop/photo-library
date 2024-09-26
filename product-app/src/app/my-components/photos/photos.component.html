@@ -3,9 +3,9 @@
   <div *ngFor="let photo of photos" (click)="addToFavorites(photo)">
     <img [src]="photo.url" alt="Random Photo">
   </div>
+</div>
 
-  <!-- Loader Icon -->
-  <div *ngIf="loading" class="loading-spinner">
-    <mat-spinner></mat-spinner>
-  </div>
+<!-- Loader Icon Centered in the Screen (Outside of the Grid) -->
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
 </div>
