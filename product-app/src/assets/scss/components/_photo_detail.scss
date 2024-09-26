@@ -2,26 +2,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
   padding: 20px;
+}
 
-  img {
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
+.photo-detail img {
+  max-width: 100%;
+  max-height: 80vh; /* Prevent the image from exceeding viewport height */
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
-  button {
-    padding: 10px 20px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.photo-detail button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 
-    &:hover {
-      background-color: #d32f2f;
-    }
+  &:hover {
+    background-color: #d32f2f;
   }
 }

@@ -24,12 +24,6 @@ export class FavoritesComponent implements OnInit {
     }
   }
 
-  // Remove a photo from favorites
-  removeFromFavorites(photo: any) {
-    this.favorites = this.favorites.filter(fav => fav.id !== photo.id);
-    localStorage.setItem('favorites', JSON.stringify(this.favorites)); // Update local storage
-  }
-
   // Navigate to single photo page
   viewPhoto(photo: any) {
     this.router.navigate(['/photos', photo.id]);
