@@ -9,7 +9,7 @@ import { PhotoService } from 'src/app/service/photo-service';
 export class FavoritesComponent implements OnInit {
   favorites: any[] = [];
 
-  constructor(private router: Router, private photoService: PhotoService) {}
+  constructor(private router: Router, private photoService: PhotoService) { }
 
   ngOnInit() {
     this.loadFavorites();

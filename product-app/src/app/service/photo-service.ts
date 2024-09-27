@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class PhotoService {
   private currentPage = 1;
 
-  constructor() {}
+  constructor() { }
 
   // Load photos with a simulated delay to emulate an API call
   loadPhotos(): Promise<any[]> {
@@ -46,7 +46,6 @@ export class PhotoService {
     if (!isAlreadyFavorite) {
       favorites.push(photo);
       localStorage.setItem('favorites', JSON.stringify(favorites));
-      console.log('Added to favorites:', photo);
     } else {
       console.log('Photo is already in favorites.');
     }
@@ -55,7 +54,9 @@ export class PhotoService {
   // Remove a photo from favorites in localStorage
   removeFromFavorites(photoId: number): void {
     let favorites = this.getFavorites();
-    favorites = favorites.filter((fav) => fav.id !== photoId);
+
+    favorites = favorites.filter((fav) => { return fav.id !== photoId
+    });
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 

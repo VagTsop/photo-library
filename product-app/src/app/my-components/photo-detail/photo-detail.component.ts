@@ -13,7 +13,7 @@ export class PhotoDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private photoService: PhotoService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const photoId = this.route.snapshot.paramMap.get('id');

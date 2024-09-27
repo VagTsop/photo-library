@@ -9,7 +9,7 @@ export class PhotosComponent implements OnInit {
   photos: any[] = []; // Store photos here
   loading = false; // Show loader when fetching data
 
-  constructor(private photoService: PhotoService) {}
+  constructor(private photoService: PhotoService) { }
 
   ngOnInit() {
     this.loadPhotos();
