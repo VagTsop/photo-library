@@ -8,12 +8,9 @@ import { PhotoService } from 'src/app/service/photo-service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
+  constructor() { }
 
-  ) { }
 
-  ngOnInit() {
 
-  }
-
+  ngOnInit() {}
 }

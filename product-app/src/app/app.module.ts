@@ -20,8 +20,6 @@ import { HeaderComponent } from './my-components/header/header.component';
     FavoritesComponent
   ],
   imports: [
-    HttpClientModule,
-    BrowserAnimationsModule,
     BrowserModule,
     SharedModule,
     AppRoutingModule
