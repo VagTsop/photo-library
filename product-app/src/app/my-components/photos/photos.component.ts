@@ -10,7 +10,7 @@ export class PhotosComponent implements OnInit {
   currentPage = 1; // Track current page for pagination
   totalPhotos = 100; // Arbitrary number, adjust as needed
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.loadPhotos();
@@ -27,13 +27,16 @@ export class PhotosComponent implements OnInit {
     const minSpinnerTime = 300; // Minimum spinner display time
 
     setTimeout(() => {
-      // Fetch 6 new random photos from Picsum
-      const newPhotos = Array(6).fill(0).map((_, index) => ({
-        id: this.currentPage * 6 + index, // Unique static ID for each photo
-        url: `https://picsum.photos/200/300?random=${Math.random()}`, // Random image URL
-        author: `Author ${Math.floor(Math.random() * 1000)}`, // Generate random author data for demo
-        staticId: this.currentPage * 6 + index // Store the static ID for favorites functionality
-      }));
+      // Fetch 6 new static photos
+      const newPhotos = Array(6).fill(0).map((_, index) => {
+        const staticId = this.currentPage * 6 + index;
+        return {
+          id: staticId, // Unique static ID for each photo
+          url: `https://picsum.photos/id/${staticId}/200/300`, // Static image URL based on staticId
+          author: `Author ${staticId}`, // Use staticId for author too for consistency
+          staticId: staticId // Store the static ID for favorites functionality
+        };
+      });
 
       this.photos = [...this.photos, ...newPhotos]; // Append new photos to the list
 
