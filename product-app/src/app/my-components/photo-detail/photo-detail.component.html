@@ -1,3 +1,4 @@
+<!-- Single Photo View with Remove from Favorites Button -->
 <div class="photo-detail" *ngIf="photo">
   <img [src]="photo?.url" [alt]="photo?.author">
   <button (click)="removeFromFavorites()">Remove from Favorites</button>

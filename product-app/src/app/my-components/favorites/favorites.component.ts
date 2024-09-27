@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './favorites.component.html',
 })
 export class FavoritesComponent implements OnInit {
-  favorites: any[] = [];
+  favorites: any[] = []; // Array to store favorite photos
 
   constructor(private router: Router) {}
 
@@ -14,18 +14,18 @@ export class FavoritesComponent implements OnInit {
     this.loadFavorites(); // Load favorites when the component initializes
   }
 
-// Inside FavoritesComponent
-loadFavorites() {
-  const storedFavorites = localStorage.getItem('favorites');
-  if (storedFavorites) {
-    this.favorites = JSON.parse(storedFavorites).map((photo: any) => ({
-      ...photo,
-      url: `https://picsum.photos/id/${photo.id}/200/300` // Ensure you load the same photo using its ID
-    }));
+  // Load favorite photos from localStorage
+  loadFavorites() {
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      this.favorites = JSON.parse(storedFavorites).map((photo: any) => ({
+        ...photo,
+        url: `https://picsum.photos/id/${photo.id}/200/300` // Use the static ID for photo URL
+      }));
+    }
   }
-}
 
-  // Navigate to single photo page
+  // Navigate to the single photo detail page
   viewPhoto(photo: any) {
     this.router.navigate(['/photos', photo.id]);
   }

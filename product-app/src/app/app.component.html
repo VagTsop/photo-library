@@ -1,5 +1,10 @@
+<!--
+Navigation bar with two links to "Photos" and "Favorites".
+-->
 <nav mat-tab-nav-bar style="display:flex;justify-content:center;align-items: center;padding: 25px;">
-    <a class="login-button" mat-tab-link [routerLink]="['/photos']">Photos</a>
-    <a class="login-button" mat-tab-link [routerLink]="['/favorites']">Favorites</a>
+  <a class="login-button" mat-tab-link [routerLink]="['/photos']">Photos</a>
+  <a class="login-button" mat-tab-link [routerLink]="['/favorites']">Favorites</a>
 </nav>
+
+<!-- Router outlet where the "Photos" or "Favorites" components will be rendered -->
 <router-outlet></router-outlet>

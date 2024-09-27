@@ -1,41 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-photo-detail',
   templateUrl: './photo-detail.component.html',
 })
 export class PhotoDetailComponent implements OnInit {
-  photo: any = {}; // Initialize with an empty object
+  photo: any = {};
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    const photoId: string | null = this.route.snapshot.paramMap.get('id');
+    const photoId = this.route.snapshot.paramMap.get('id'); // Get photo ID from URL
     if (photoId) {
-      this.loadPhoto(photoId); // Call the function with the photoId
+      this.loadPhoto(photoId); // Load photo using ID
     } else {
-      // Handle the case where photoId is null, redirect or show an error
-      this.router.navigate(['/favorites']);
+      this.router.navigate(['/favorites']); // Redirect if no valid ID is provided
     }
   }
 
-  // Load the photo by ID from the favorites stored in localStorage
+  // Load the photo from localStorage using the photoId
   loadPhoto(photoId: string) {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
       const favorites = JSON.parse(storedFavorites);
-
-      // Convert photoId to number before comparison if needed
-      const numericPhotoId = Number(photoId);
-
-      // Find the photo by id in favorites (ensure correct type comparison)
-      this.photo = favorites.find((fav: any) => fav.id == numericPhotoId) || {}; // Default to empty object if not found
-
-      // Remove the redirect, let the component render even if the photo is missing
+      const numericPhotoId = Number(photoId); // Ensure numeric comparison
+      this.photo = favorites.find((fav) => fav.id === numericPhotoId) || {}; // Find photo by ID
       if (!this.photo || !this.photo.url) {
-        console.warn('Photo not found');
+        console.warn('Photo not found'); // Log if photo is not found
       }
     }
   }
@@ -45,9 +37,9 @@ export class PhotoDetailComponent implements OnInit {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
       let favorites = JSON.parse(storedFavorites);
-      favorites = favorites.filter((fav: any) => fav.id !== this.photo.id);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
+      favorites = favorites.filter((fav) => fav.id !== this.photo.id); // Remove the current photo from favorites
+      localStorage.setItem('favorites', JSON.stringify(favorites)); // Update localStorage
     }
-    this.router.navigate(['/favorites']); // Redirect to favorites after removal
+    this.router.navigate(['/favorites']); // Navigate back to favorites
   }
 }
