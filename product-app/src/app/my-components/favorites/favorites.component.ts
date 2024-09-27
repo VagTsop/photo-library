@@ -1,29 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PhotoService } from 'src/app/service/photo-service';
 
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.component.html',
 })
 export class FavoritesComponent implements OnInit {
-  favorites: any[] = []; // Array to store favorite photos
+  favorites: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private photoService: PhotoService) {}
 
   ngOnInit() {
-    this.loadFavorites(); // Load favorites when the component initializes
+    this.loadFavorites();
   }
 
-  // Load favorite photos from localStorage
   loadFavorites() {
-    const storedFavorites = localStorage.getItem('favorites');
-    if (storedFavorites) {
-      this.favorites = JSON.parse(storedFavorites); // Directly use the stored URL
-    }
+    this.favorites = this.photoService.getFavorites();
   }
 
-  // Navigate to the single photo detail page
   viewPhoto(photo: any) {
-    this.router.navigate(['/photos', photo.staticId]); // Use staticId to navigate to the correct photo
+    this.router.navigate(['/photos', photo.staticId]);
   }
 }

@@ -1,49 +1,67 @@
-// import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class PhotoService {
-//   private readonly favoritesKey = 'favorites';
+@Injectable({
+  providedIn: 'root',
+})
+export class PhotoService {
+  private currentPage = 1;
 
-//   constructor() {}
+  constructor() {}
 
-//   // Fetch photos with a fixed URL for the current page (this is unrelated to favorites)
-//   loadPhotos(currentPage: number): Promise<any[]> {
-//     return new Promise((resolve) => {
-//       const randomDelay = Math.random() * 100 + 200;
-//       setTimeout(() => {
-//         const newPhotos = Array(6).fill(0).map((_, index) => ({
-//           id: currentPage * 6 + index,
-//           url: `https://picsum.photos/200/300?random=${currentPage * 6 + index}`, // Fixed URL per image
-//           author: `Author ${Math.floor(Math.random() * 1000)}`,
-//           staticId: currentPage * 6 + index,
-//         }));
-//         resolve(newPhotos);
-//       }, randomDelay);
-//     });
-//   }
+  // Load photos with a simulated delay to emulate an API call
+  loadPhotos(): Promise<any[]> {
+    return new Promise((resolve) => {
+      // Simulate a delay between 200-300ms for fetching photos
+      const randomDelay = Math.random() * 100 + 200;
+      const minSpinnerTime = 300; // Minimum spinner display time
 
-//   // Retrieve favorites from localStorage
-//   getFavorites(): any[] {
-//     const storedFavorites = localStorage.getItem(this.favoritesKey);
-//     return storedFavorites ? JSON.parse(storedFavorites) : [];
-//   }
+      setTimeout(() => {
+        // Fetch 6 new static photos
+        const newPhotos = Array(6).fill(0).map((_, index) => {
+          const staticId = this.currentPage * 6 + index;
+          return {
+            id: staticId, // Unique static ID for each photo
+            url: `https://picsum.photos/id/${staticId}/200/300`, // Static image URL based on staticId
+            author: `Author ${staticId}`, // Use staticId for author too for consistency
+            staticId: staticId // Store the static ID for favorites functionality
+          };
+        });
+        this.currentPage++;
+        resolve(newPhotos);
+      }, randomDelay + minSpinnerTime);
+    });
+  }
 
-//   // Add a photo to the favorites in localStorage
-//   addToFavorites(photo: any): void {
-//     let favorites = this.getFavorites();
-//     const isAlreadyFavorite = favorites.some((fav) => fav.staticId === photo.staticId);
-//     if (!isAlreadyFavorite) {
-//       favorites.push(photo);
-//       localStorage.setItem(this.favoritesKey, JSON.stringify(favorites));
-//     }
-//   }
+  // Get favorites from localStorage
+  getFavorites(): any[] {
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  }
 
-//   // Remove a photo from the favorites by ID
-//   removeFromFavorites(photoId: number): void {
-//     let favorites = this.getFavorites();
-//     favorites = favorites.filter((fav) => fav.id !== photoId);
-//     localStorage.setItem(this.favoritesKey, JSON.stringify(favorites));
-//   }
-// }
+  // Add a photo to favorites in localStorage
+  addToFavorites(photo: any): void {
+    let favorites = this.getFavorites();
+    const isAlreadyFavorite = favorites.some((fav) => fav.staticId === photo.staticId);
+
+    if (!isAlreadyFavorite) {
+      favorites.push(photo);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      console.log('Added to favorites:', photo);
+    } else {
+      console.log('Photo is already in favorites.');
+    }
+  }
+
+  // Remove a photo from favorites in localStorage
+  removeFromFavorites(photoId: number): void {
+    let favorites = this.getFavorites();
+    favorites = favorites.filter((fav) => fav.id !== photoId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+
+  // Get a single photo by ID from favorites
+  getPhotoById(photoId: number): any {
+    const favorites = this.getFavorites();
+    return favorites.find((fav) => fav.id === photoId);
+  }
+}

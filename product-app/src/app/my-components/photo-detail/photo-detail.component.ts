@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PhotoService } from 'src/app/service/photo-service';
 
 @Component({
   selector: 'app-photo-detail',
@@ -8,38 +9,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PhotoDetailComponent implements OnInit {
   photo: any = {};
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private photoService: PhotoService
+  ) {}
 
   ngOnInit() {
-    const photoId = this.route.snapshot.paramMap.get('id'); // Get photo ID from URL
+    const photoId = this.route.snapshot.paramMap.get('id');
     if (photoId) {
-      this.loadPhoto(photoId); // Load photo using ID
+      this.loadPhoto(parseInt(photoId, 10));
     } else {
-      this.router.navigate(['/favorites']); // Redirect if no valid ID is provided
+      this.router.navigate(['/favorites']);
     }
   }
 
-  // Load the photo from localStorage using the photoId
-  loadPhoto(photoId: string) {
-    const storedFavorites = localStorage.getItem('favorites');
-    if (storedFavorites) {
-      const favorites = JSON.parse(storedFavorites);
-      const numericPhotoId = Number(photoId); // Ensure numeric comparison
-      this.photo = favorites.find((fav) => fav.id === numericPhotoId) || {}; // Find photo by ID
-      if (!this.photo || !this.photo.url) {
-        console.warn('Photo not found'); // Log if photo is not found
-      }
+  loadPhoto(photoId: number) {
+    this.photo = this.photoService.getPhotoById(photoId) || {};
+    if (!this.photo || !this.photo.url) {
+      console.warn('Photo not found');
     }
   }
 
-  // Remove the photo from favorites and navigate back to the favorites screen
   removeFromFavorites() {
-    const storedFavorites = localStorage.getItem('favorites');
-    if (storedFavorites) {
-      let favorites = JSON.parse(storedFavorites);
-      favorites = favorites.filter((fav) => fav.id !== this.photo.id); // Remove the current photo from favorites
-      localStorage.setItem('favorites', JSON.stringify(favorites)); // Update localStorage
-    }
-    this.router.navigate(['/favorites']); // Navigate back to favorites
+    this.photoService.removeFromFavorites(this.photo.id);
+    this.router.navigate(['/favorites']);
   }
 }
