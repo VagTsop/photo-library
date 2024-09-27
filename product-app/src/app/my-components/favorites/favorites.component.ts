@@ -18,15 +18,12 @@ export class FavoritesComponent implements OnInit {
   loadFavorites() {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
-      this.favorites = JSON.parse(storedFavorites).map((photo: any) => ({
-        ...photo,
-        url: `https://picsum.photos/id/${photo.id}/200/300` // Use the static ID for photo URL
-      }));
+      this.favorites = JSON.parse(storedFavorites); // Directly use the stored URL
     }
   }
 
   // Navigate to the single photo detail page
   viewPhoto(photo: any) {
-    this.router.navigate(['/photos', photo.id]);
+    this.router.navigate(['/photos', photo.staticId]); // Use staticId to navigate to the correct photo
   }
 }
