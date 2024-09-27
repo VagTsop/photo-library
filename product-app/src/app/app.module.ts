@@ -8,11 +8,13 @@ import { PhotoDetailComponent } from './my-components/photo-detail/photo-detail.
 import { PhotosComponent } from './my-components/photos/photos.component';
 import { FavoritesComponent } from './my-components/favorites/favorites.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './my-components/header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     PhotosComponent,
     PhotoDetailComponent,
     FavoritesComponent
